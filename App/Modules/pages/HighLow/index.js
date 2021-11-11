@@ -8,26 +8,31 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {CARDLIST} from '../../../Constants/CardList';
-import CardStack, { Card } from 'react-native-card-stack-swiper';
-import {HOME} from '../../../Constants/path';
-import { playerTurn } from '../../../Components/playerTurn';
+import CardStack, {Card} from 'react-native-card-stack-swiper';
+import {HOME, RESULT, Result} from '../../../Constants/path';
+import {PlayerTurn} from '../../../Components';
+import * as Contexts from '../../../Context';
 
-const width=Dimensions.get('window').width;
-const height=Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 const shuffle = ([...array]) => {
-  for (let i = array.length - 1 ; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i)) + 1;
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * i) + 1;
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
-}
+};
 
-export function HighLow({navigation}){
+export function HighLow({navigation}) {
   const [cardCount, setCardCount] = useState(0);
   const [horizontalSwipe, setHorizontalSwipe] = useState(false);
   const [alcCount, setAlcCount] = useState(0);
+  const [drinkCount, setDrinkCount] = useState(0);
   const [cards, setCards] = useState(CARDLIST.data);
   const [cardImages, setCardImages] = useState([]);
+  const {userList} = Contexts.useUserListContext();
+  const [backCard, setBackCard] = useState(false);
+  console.log('userListは', userList);
 
   useEffect(() => {
     const shuffledCards = shuffle(cards);
@@ -35,41 +40,44 @@ export function HighLow({navigation}){
     var Views = [];
     for (let i = 0; i < cards.length; i++) {
       Views.push(
-        <Image source={shuffledCards[i].uri} style={{width: width*0.7, height: height*0.9}} resizeMode='contain'/>
+        <Image
+          source={shuffledCards[i].uri}
+          style={{width: width * 0.7, height: height * 0.9}}
+          resizeMode="contain"
+        />,
       );
     }
     setCardImages(Views);
   }, []);
 
-  function checkSwipedTop(cardCount){
-    const num = cards[cardCount].num
-    const mark = cards[cardCount].mark
-    if(cardCount<cards.length){
-      var nextNum = cards[cardCount + 1].num
-      var nextMark = cards[cardCount + 1].mark
-    }else{
-      var nextNum = cards[cardCount].num
-      var nextMark = cards[cardCount].mark
+  function checkSwipedTop(cardCount) {
+    const num = cards[cardCount].num;
+    const mark = cards[cardCount].mark;
+    if (cardCount < cards.length) {
+      var nextNum = cards[cardCount + 1].num;
+      var nextMark = cards[cardCount + 1].mark;
+    } else {
+      var nextNum = cards[cardCount].num;
+      var nextMark = cards[cardCount].mark;
     }
-    if(cardCount >= 1){
-      var postNum = cards[cardCount - 1].num
-      var postMark = cards[cardCount - 1].mark
-    }else{
-      var postNum = cards[cardCount].num
-      var postMark = cards[cardCount].mark
+    if (cardCount >= 1) {
+      var postNum = cards[cardCount - 1].num;
+      var postMark = cards[cardCount - 1].mark;
+    } else {
+      var postNum = cards[cardCount].num;
+      var postMark = cards[cardCount].mark;
     }
 
-    if(cardCount <= 1 || cardCount >= 55){
+    if (cardCount <= 1 || cardCount >= 55) {
       ;
-    }
-    else if (postMark === "joker"){
+    } else if (postMark === "joker"){
       ;
-    }
-    else if (mark === "joker"){
+    } else if (mark === "joker"){
       setAlcCount(alcCount + 2);
     }
     else if (postNum >= 3 && postNum <=11){
       if (postNum < num){
+        setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
@@ -77,6 +85,7 @@ export function HighLow({navigation}){
     }
     else if (postNum === 2 || postNum === 12){
       if (mark === "dia" || mark === "heart"){
+        setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
@@ -84,6 +93,7 @@ export function HighLow({navigation}){
     }
     else if (postNum === 1 || postNum ===13){
       if (mark === "spade"){
+        setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
@@ -122,6 +132,7 @@ export function HighLow({navigation}){
     }
     else if (postNum >= 3 && postNum <=11){
       if (postNum > num){
+        setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
@@ -129,6 +140,7 @@ export function HighLow({navigation}){
     }
     else if (postNum === 2 || postNum === 12){
       if (mark === "spade" || mark === "club"){
+        setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
@@ -136,6 +148,7 @@ export function HighLow({navigation}){
     }
     else if (postNum === 1 || postNum ===13){
       if (mark === "club"){
+        setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
@@ -169,20 +182,23 @@ export function HighLow({navigation}){
       ;
     } else if (mark === "joker"){
       setAlcCount(alcCount + 2);
-    } else if (postNum >= 3 && postNum <=11){
-      if (postNum < num){
+    } else if (postNum >= 3 && postNum <= 11) {
+      if (postNum < num) {
+        setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
       }
     }else if (postNum === 2 || postNum === 12){
       if (mark === "spade" || mark === "club"){
+        setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
       }
     }else if (postNum === 1 || postNum === 13){
       if (mark === "dia"){
+        setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
@@ -192,59 +208,57 @@ export function HighLow({navigation}){
       ;
     }
   }
-  function checkSwipedLeft(cardCount){
-    const num = cards[cardCount].num
-    const mark = cards[cardCount].mark
-    if(cardCount<cards.length){
-      var nextNum = cards[cardCount + 1].num
-      var nextMark = cards[cardCount + 1].mark
-    }else{
-      var nextNum = cards[cardCount].num
-      var nextMark = cards[cardCount].mark
+  function checkSwipedLeft(cardCount) {
+    const num = cards[cardCount].num;
+    const mark = cards[cardCount].mark;
+    if (cardCount < cards.length) {
+      var nextNum = cards[cardCount + 1].num;
+      var nextMark = cards[cardCount + 1].mark;
+    } else {
+      var nextNum = cards[cardCount].num;
+      var nextMark = cards[cardCount].mark;
     }
-    if(cardCount >= 1){
-      var postNum = cards[cardCount - 1].num
-      var postMark = cards[cardCount - 1].mark
-    }else{
-      var postNum = cards[cardCount].num
-      var postMark = cards[cardCount].mark
+    if (cardCount >= 1) {
+      var postNum = cards[cardCount - 1].num;
+      var postMark = cards[cardCount - 1].mark;
+    } else {
+      var postNum = cards[cardCount].num;
+      var postMark = cards[cardCount].mark;
     }
 
-    if(cardCount <= 1 || cardCount >= 55){
+    if (cardCount <= 1 || cardCount >= 55) {
       ;
-    } else if (postMark === "joker"){
+    } else if (postMark === 'joker') {
       ;
-    }
-    else if (mark === "joker"){
+    } else if (mark === 'joker') {
       setAlcCount(alcCount + 2);
-    }
-    else if (postNum >= 3 && postNum <=11){
-      if (postNum < num){
+    } else if (postNum >= 3 && postNum <= 11) {
+      if (postNum < num) {
+        setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }
-    else if (postNum === 2 || postNum === 12){
-      if (mark === "dia" || mark === "heart"){
+    } else if (postNum === 2 || postNum === 12) {
+      if (mark === 'dia' || mark === 'heart') {
+        setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }
-    else if (postNum === 1 || postNum ===13){
-      if (mark === "heart"){
+    } else if (postNum === 1 || postNum === 13) {
+      if (mark === 'heart') {
+        setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }
-    else {
+    } else {
       ;
     }
   }
 
-  function showShot(alcCount){
+  function showShot(alcCount) {
     var shotView = [];
     return (
       <View style={{flexDirection:"row", justifyContent: "center", alignItems: "center"}}>
@@ -254,10 +268,33 @@ export function HighLow({navigation}){
     )
   }
 
-  function check1and13(cardCount){
-    setHorizontalSwipe(cards[cardCount+1].num !== 13 && cards[cardCount+1].num !== 1 && cards[cardCount+1].num !== 15)
-    console.log(cards[cardCount].num)
-    console.log(horizontalSwipe)
+  function showDrinkImage(drinkCount) {
+    return (
+      <>
+        {drinkCount !== 0 && (
+          <TouchableOpacity
+            onPress={setDrinkCount(0)}
+            style={styles.drinkImageView}>
+            <Text>{drinkCount}ぐい</Text>
+            <Image
+              source={require('../../../Images/cheer.png')}
+              style={{width: width, height: height}}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        )}
+      </>
+    );
+  }
+
+  function check1and13(cardCount) {
+    setHorizontalSwipe(
+      cards[cardCount + 1].num !== 13 &&
+        cards[cardCount + 1].num !== 1 &&
+        cards[cardCount + 1].num !== 15,
+    );
+    console.log(cards[cardCount].num);
+    console.log(horizontalSwipe);
   }
 
   function setText(cardCount){
@@ -300,21 +337,26 @@ export function HighLow({navigation}){
             <Image source={require("../../../Images/heart.png")} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
           </View>
         </>)
-    }else{
+    } else {
       ;
     }
   }
 
-  function resetCard({navigation}){navigation.navigate(HOME)}
+  function resetCard({navigation}) {
+    navigation.navigate(HOME);
+  }
+  function navigateToResult() {
+    navigation.navigate(RESULT);
+  }
 
-  return(
+  return (
     <View style={styles.container}>
+      {showDrinkImage(drinkCount)}
       {setText(cardCount)}
-      {playerTurn()}
+      <PlayerTurn userList={userList} />
       <View style={styles.box}>
-        <CardStack 
+        <CardStack
           style={styles.box}
-          verticalThreshold={height / 4}
           onSwipedTop={() => checkSwipedTop(cardCount)}
           onSwipedBottom={() => checkSwipedBottom(cardCount)}
           onSwipedRight={() => checkSwipedRight(cardCount)}
@@ -325,17 +367,16 @@ export function HighLow({navigation}){
           horizontalThreshold={width / 6}
           verticalThreshold={width / 6}
           secondCardZoom={0}
+          onSwipeStart={() => setBackCard(true)}
+          onSwipeEnd={() => setBackCard(false)}
           onSwiped={() => {
-            setCardCount(cardCount + 1) 
-            check1and13(cardCount)
-          }}
-        >
+            setCardCount(cardCount + 1);
+            check1and13(cardCount);
+          }}>
           {cardImages}
         </CardStack>
       </View>
-      <View style={styles.shot}>
-          {showShot(alcCount)}
-      </View>
+      <View style={styles.shot}>{showShot(alcCount)}</View>
       <View style={styles.alcCount}>
         {/*}
         <Text style={{color: 'black', fontSize: height*0.06, fontFamily: 'AppleSDGothicNeo-Light',}}>
@@ -466,5 +507,14 @@ const styles = StyleSheet.create({
     marginTop: height * 0.07,
     paddingRight: width * 0.05,
     zIndex: 2,
-  }
-})
+  },
+  drinkImageView: {
+    position: 'absolute',
+    marginTop: height * 0.3,
+    height: height * 0.4,
+    width: width,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 5,
+  },
+});

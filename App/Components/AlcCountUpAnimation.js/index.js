@@ -4,13 +4,13 @@ import {Dimensions, Stylesheet, View, Text, Animated} from 'react-native';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-export default function AlcCountUpAnimation(){
-  return(
+export default function AlcCountUpAnimation() {
+  return (
     <View style={Stylesheet.container}>
       <Text>+1</Text>
     </View>
-  )
-};
+  );
+}
 
 const style = Stylesheet.create({
   container: {
@@ -21,5 +21,5 @@ const style = Stylesheet.create({
   Text: {
     color: 'black',
     fontSize: '20',
-  }
-})
+  },
+});

@@ -13,84 +13,99 @@ import {
 import {HOME} from '../../../Constants/path';
 import * as Contexts from '../../Context';
 
-const width=Dimensions.get('window').width;
-const height=Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
-export function RegisterUser(){
+export function RegisterUser() {
   const {userList, setUserList} = Contexts.useUserListContext();
 
   const addUser = () => {
     console.log(userList);
     const num = userList[userList.length - 1].id + 2;
+    const checkTurnFocus = userList.some(element => element.turnFocus === true);
+    //TODO: turnFocus:trueが存在するかで場合分けする必要がある
     setUserList([
       ...userList,
       {
         id: userList[userList.length - 1].id + 1,
-        name: "User " + num,
+        name: 'User ' + num,
         score: 0,
         totalScore: 0,
+        turnFocus: checkTurnFocus ? false : true,
       },
-    ])
-  }
+    ]);
+  };
 
-  const deleteUser = (id) => {
-    console.log("id",id)
-    if (userList.length>=2){
-      var newList = userList
-      newList.splice(id, 1)
-      setUserList(newList)
-      console.log(newList)
-      console.log(userList)}
-    else {}
-  }
+  const deleteUser = (id, item) => {
+    console.log(userList);
+    console.log('id', id);
+    if (userList.length >= 2) {
+      const newList = userList.filter(element => element.id !== id);
+      if (item.turnFocus) {
+        newList[0].turnFocus = true;
+      }
+      setUserList(newList);
+    } else {
+      console.log('Userがは2人以下にはできません。');
+    }
+  };
 
-  return(
+  //TODO；まだ途中、名前を変更するとエラーが出る,Jsonの一部変更の方法をググる必要がある。
+  /*
+  function mkNewUserList(num) {
+    setUserList([
+      ...userList,
+      {
+        id: userList[userList.length - 1].id + 1,
+        name: 'User ' + num,
+        score: userList[num].score,
+        totalScore: userList[num].totalScore,
+        turnFocus: userList[num].turnFocus,
+      },
+    ]);
+  }
+*/
+  return (
     <View style={styles.container}>
-      <View style={{height: height * 0.2, width: width, flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
-        <Text style={{fontSize: 40, color: "white"}}>
-          Input Name
-        </Text>
+      <View
+        style={{
+          height: height * 0.2,
+          width: width,
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center"}}>
+        <Text style={{fontSize: 40, color: "white"}}>Input Name</Text>
       </View>
-      <FlatList 
-        data={userList} 
+      <FlatList
+        data={userList}
         showsHorizontalScrollIndicator={true}
         style={styles.flatList}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <View style={{flexDirection: "row"}}>
+        //keyExtractor={item => item.id}
+        renderItem={({item, index}) => (
+          <View style={{flexDirection: 'row'}}>
             <View style={styles.userName}>
-              <TextInput 
+              <TextInput
                 value={item.name}
-                onChangeText={(value) => {
-                  var newUserList = userList
-                  newUserList[item.id].name = value
-                  console.log(newUserList)
-                  setUserList([
-                    newUserList
-                  ])
+                onChangeText={value => {
+                  var newUserList = userList;
+                  newUserList[index].name = value;
+                  console.log(newUserList);
+                  setUserList(newUserList);
                 }}
                 style={styles.input}
               />
             </View>
-            <TouchableOpacity
-              onPress={()=>(deleteUser(item.id))}
-            >
+            <TouchableOpacity onPress={() => deleteUser(item.id, item)}>
               <View style={styles.closeButton}>
-                <Text style={{fontSize: 30}}>
-                  ×
-                </Text>
+                <Text style={{fontSize: 30}}>×</Text>
               </View>
             </TouchableOpacity>
           </View>
         )}
       />
-      <TouchableOpacity
-        onPress = {()=>(addUser())}
-      >
+      <TouchableOpacity onPress={() => (addUser())}>
         <View style={styles.addUser}>
-          <Text>
-            ＋
-          </Text>
+          <Text>＋</Text>
         </View>
       </TouchableOpacity>
     </View>

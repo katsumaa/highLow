@@ -12,7 +12,7 @@ import * as Contexts from '../../../Context'
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-export function Settings(){
+export function Settings() {
   const {userList, setUserList} = Contexts.useUserListContext();
   return(
     <View style={styles.container}>
