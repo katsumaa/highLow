@@ -10,11 +10,12 @@ import {
 import {CARDLIST} from '../../../Constants/CardList';
 import CardStack, {Card} from 'react-native-card-stack-swiper';
 import {HOME, RESULT, Result} from '../../../Constants/path';
-import {PlayerTurn} from '../../../Components';
+import * as Components from '../../../Components';
 import * as Contexts from '../../../Context';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
 const shuffle = ([...array]) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * i) + 1;
@@ -22,6 +23,32 @@ const shuffle = ([...array]) => {
   }
   return array;
 };
+
+function addCardList(cardControl, cards, shuffledCards) {
+  var Views = [];
+  for (let i = 0; i < cards.length; i++) {
+    Views.push(
+      <>
+        <Card>
+          {cardControl ? (
+            <Image
+              source={shuffledCards[i].uri}
+              style={{width: width * 0.7, height: height * 0.9}}
+              resizeMode="contain"
+            />
+          ) : (
+            <Image
+              source={require('../../../Images/reverse.png')}
+              style={{width: width * 0.7, height: height * 0.9}}
+              resizeMode="contain"
+            />
+          )}
+        </Card>
+      </>,
+    );
+  }
+  return Views;
+}
 
 export function HighLow({navigation}) {
   const [cardCount, setCardCount] = useState(0);
@@ -31,22 +58,13 @@ export function HighLow({navigation}) {
   const [cards, setCards] = useState(CARDLIST.data);
   const [cardImages, setCardImages] = useState([]);
   const {userList} = Contexts.useUserListContext();
-  const [backCard, setBackCard] = useState(false);
-  console.log('userListは', userList);
+  const [cardControl, setCardControl] = useState(true);
+  console.log('cardControl', cardImages[0]);
 
   useEffect(() => {
     const shuffledCards = shuffle(cards);
     setCards(shuffledCards);
-    var Views = [];
-    for (let i = 0; i < cards.length; i++) {
-      Views.push(
-        <Image
-          source={shuffledCards[i].uri}
-          style={{width: width * 0.7, height: height * 0.9}}
-          resizeMode="contain"
-        />,
-      );
-    }
+    const Views = addCardList(cardControl, cards, shuffledCards);
     setCardImages(Views);
   }, []);
 
@@ -70,29 +88,26 @@ export function HighLow({navigation}) {
 
     if (cardCount <= 1 || cardCount >= 55) {
       ;
-    } else if (postMark === "joker"){
+    } else if (postMark === 'joker') {
       ;
-    } else if (mark === "joker"){
+    } else if (mark === 'joker'){
       setAlcCount(alcCount + 2);
-    }
-    else if (postNum >= 3 && postNum <=11){
+    } else if (postNum >= 3 && postNum <= 11) {
       if (postNum < num){
         setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }
-    else if (postNum === 2 || postNum === 12){
-      if (mark === "dia" || mark === "heart"){
+    } else if (postNum === 2 || postNum === 12){
+      if (mark === 'dia' || mark === 'heart'){
         setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
       }
-    }
-    else if (postNum === 1 || postNum ===13){
-      if (mark === "spade"){
+    } else if (postNum === 1 || postNum ===13){
+      if (mark === 'spade'){
         setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
@@ -103,31 +118,32 @@ export function HighLow({navigation}) {
       ;
     }
   }
-  function checkSwipedBottom(cardCount){
-    const num = cards[cardCount].num
-    const mark = cards[cardCount].mark
-    if(cardCount<cards.length){
-      var nextNum = cards[cardCount + 1].num
-      var nextMark = cards[cardCount + 1].mark
-    }else{
-      var nextNum = cards[cardCount].num
-      var nextMark = cards[cardCount].mark
+
+  function checkSwipedBottom(cardCount) {
+    const num = cards[cardCount].num;
+    const mark = cards[cardCount].mark;
+    if (cardCount < cards.length) {
+      var nextNum = cards[cardCount + 1].num;
+      var nextMark = cards[cardCount + 1].mark;
+    } else {
+      var nextNum = cards[cardCount].num;
+      var nextMark = cards[cardCount].mark;
     }
-    if(cardCount >= 1){
-      var postNum = cards[cardCount - 1].num
-      var postMark = cards[cardCount - 1].mark
-    }else{
-      var postNum = cards[cardCount].num
-      var postMark = cards[cardCount].mark
+    if (cardCount >= 1) {
+      var postNum = cards[cardCount - 1].num;
+      var postMark = cards[cardCount - 1].mark;
+    } else {
+      var postNum = cards[cardCount].num;
+      var postMark = cards[cardCount].mark;
     }
 
-    if(cardCount <= 1 || cardCount >= 55){
+    if (cardCount <= 1 || cardCount >= 55) {
       ;
     }
-    else if (postMark === "joker"){
+    else if (postMark === 'joker'){
       ;
     }
-    else if (mark === "joker"){
+    else if (mark === 'joker'){
       setAlcCount(alcCount + 2);
     }
     else if (postNum >= 3 && postNum <=11){
@@ -139,7 +155,7 @@ export function HighLow({navigation}) {
       }
     }
     else if (postNum === 2 || postNum === 12){
-      if (mark === "spade" || mark === "club"){
+      if (mark === 'spade' || mark === 'club'){
         setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
@@ -147,7 +163,7 @@ export function HighLow({navigation}) {
       }
     }
     else if (postNum === 1 || postNum ===13){
-      if (mark === "club"){
+      if (mark === 'club'){
         setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
@@ -178,9 +194,9 @@ export function HighLow({navigation}) {
 
     if(cardCount <= 1 || cardCount >= 55){
       ;
-    } else if (postMark === "joker"){
+    } else if (postMark === 'joker'){
       ;
-    } else if (mark === "joker"){
+    } else if (mark === 'joker'){
       setAlcCount(alcCount + 2);
     } else if (postNum >= 3 && postNum <= 11) {
       if (postNum < num) {
@@ -190,14 +206,14 @@ export function HighLow({navigation}) {
         setAlcCount(alcCount + 1);
       }
     }else if (postNum === 2 || postNum === 12){
-      if (mark === "spade" || mark === "club"){
+      if (mark === 'spade' || mark === 'club'){
         setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
         setAlcCount(alcCount + 1);
       }
     }else if (postNum === 1 || postNum === 13){
-      if (mark === "dia"){
+      if (mark === 'dia'){
         setDrinkCount(alcCount);
         setAlcCount(0);
       }else{
@@ -261,27 +277,33 @@ export function HighLow({navigation}) {
   function showShot(alcCount) {
     var shotView = [];
     return (
-      <View style={{flexDirection:"row", justifyContent: "center", alignItems: "center"}}>
-        <Image source={require("../../../Images/shot.png")} style={{width: width*0.06, height: height*0.06}} resizeMode='contain'/>
-        <Text style={{fontSize: 25, color: "white"}}> × {alcCount}</Text>
+      <View style={{flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
+        <Image source={require('../../../Images/shot.png')} style={{width: width*0.06, height: height*0.06}} resizeMode='contain'/>
+        <Text style={{fontSize: 25, color: 'white'}}> × {alcCount}</Text>
       </View>
-    )
+    );
   }
 
   function showDrinkImage(drinkCount) {
     return (
       <>
         {drinkCount !== 0 && (
-          <TouchableOpacity
-            onPress={setDrinkCount(0)}
-            style={styles.drinkImageView}>
-            <Text>{drinkCount}ぐい</Text>
-            <Image
-              source={require('../../../Images/cheer.png')}
-              style={{width: width, height: height}}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+          <View style={styles.drinkImageView}>
+            <View style={styles.drinkImageText}>
+              <Text style={{fontSize: height * 0.05, color: 'red'}}>
+                {drinkCount} Shot!
+              </Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => setDrinkCount(0)}
+              style={styles.drinkImageTouchable}>
+              <Image
+                source={require('../../../Images/cheers/cheer_wine.png')}
+                style={{width: width, height: height}}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </View>
         )}
       </>
     );
@@ -297,11 +319,11 @@ export function HighLow({navigation}) {
     console.log(horizontalSwipe);
   }
 
-  function setText(cardCount){
-    const num = cards[cardCount].num
-    if (cardCount >= 54){
+  function setText(cardCount) {
+    const num = cards[cardCount].num;
+    if (cardCount >= 54) {
       ;
-    }else if(num >= 3 && num <=11){
+    } else if (num >= 3 && num <= 11){
       return(
         <>
           <View style={styles.topTextbox}>
@@ -325,16 +347,16 @@ export function HighLow({navigation}) {
       return(
         <>
           <View style={styles.topTextbox}>
-            <Image source={require("../../../Images/spade.png")} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
+            <Image source={require('../../../Images/spade.png')} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
           </View>    
           <View style={styles.bottomTextbox}>
-            <Image source={require("../../../Images/club.png")} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
+            <Image source={require('../../../Images/club.png')} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
           </View>
           <View style={styles.rightTextbox}>
-            <Image source={require("../../../Images/dia.png")} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
+            <Image source={require('../../../Images/dia.png')} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
           </View>
           <View style={styles.leftTextbox}>
-            <Image source={require("../../../Images/heart.png")} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
+            <Image source={require('../../../Images/heart.png')} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
           </View>
         </>)
     } else {
@@ -353,7 +375,7 @@ export function HighLow({navigation}) {
     <View style={styles.container}>
       {showDrinkImage(drinkCount)}
       {setText(cardCount)}
-      <PlayerTurn userList={userList} />
+      <Components.PlayerTurn userList={userList} />
       <View style={styles.box}>
         <CardStack
           style={styles.box}
@@ -367,13 +389,16 @@ export function HighLow({navigation}) {
           horizontalThreshold={width / 6}
           verticalThreshold={width / 6}
           secondCardZoom={0}
-          onSwipeStart={() => setBackCard(true)}
-          onSwipeEnd={() => setBackCard(false)}
+          onSwipeStart={() => setCardControl(false)}
+          onSwipeEnd={() => setCardControl(true)}
           onSwiped={() => {
             setCardCount(cardCount + 1);
             check1and13(cardCount);
           }}>
           {cardImages}
+          {/*}
+          <Components.CardList cardControl={cardControl} cards={cards}/>
+        {*/}
         </CardStack>
       </View>
       <View style={styles.shot}>{showShot(alcCount)}</View>
@@ -394,9 +419,8 @@ export function HighLow({navigation}) {
         </TouchableOpacity>
       </View>
     </View>
-  )
+  );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -431,7 +455,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: height*0.05,
     fontFamily: 'AppleSDGothicNeo-Bold',
-    color: "white"
+    color: 'white'
   },
   bottomTextbox: {
     position: 'absolute',
@@ -445,7 +469,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: height * 0.05,
     fontFamily: 'AppleSDGothicNeo-Bold',
-    color: "white",
+    color: 'white',
   },
   rightTextbox: {
     position: 'absolute',
@@ -465,7 +489,7 @@ const styles = StyleSheet.create({
   },
   resetBox: {
     width: width*1,
-    position: "absolute",
+    position: 'absolute',
     marginTop: height*0.9,
     marginRight: 0,
     flexDirection: 'column',
@@ -476,7 +500,7 @@ const styles = StyleSheet.create({
     height: height*0.05,
     width: width*0.2,
     borderRadius: 30,
-    backgroundColor: "#F2F2F2",
+    backgroundColor: '#F2F2F2',
     borderLeftColor: '#FFFFFF',
     borderTopColor: '#FFFFFF',
     borderRightColor: '#707070',
@@ -485,36 +509,48 @@ const styles = StyleSheet.create({
     borderTopWidth: 3,
     borderRightWidth: 3,
     borderBottomWidth: 3,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   alcCount: {
     width: width*1,
-    position: "absolute",
-    flexDirection: "column",
+    position: 'absolute',
+    flexDirection: 'column',
     alignItems: 'flex-start',
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
     marginTop: height*0.9,
     marginLeft: height*0.03,
   },
   shot: {
-    position: "absolute",
+    position: 'absolute',
     width: width * 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     alignItems: 'flex-end',
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     marginTop: height * 0.07,
     paddingRight: width * 0.05,
     zIndex: 2,
   },
   drinkImageView: {
     position: 'absolute',
-    marginTop: height * 0.3,
+    height: height,
+    width: width,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    zIndex: 5,
+  },
+  drinkImageText: {
+    height: height * 0.05,
+    width: width,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  drinkImageTouchable: {
     height: height * 0.4,
     width: width,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 5,
   },
 });
