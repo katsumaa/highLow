@@ -87,35 +87,31 @@ export function HighLow({navigation}) {
     }
 
     if (cardCount <= 1 || cardCount >= 55) {
-      ;
     } else if (postMark === 'joker') {
-      ;
-    } else if (mark === 'joker'){
+    } else if (mark === 'joker') {
       setAlcCount(alcCount + 2);
     } else if (postNum >= 3 && postNum <= 11) {
-      if (postNum < num){
+      if (postNum < num) {
         setDrinkCount(alcCount);
         setAlcCount(0);
       } else {
         setAlcCount(alcCount + 1);
       }
-    } else if (postNum === 2 || postNum === 12){
-      if (mark === 'dia' || mark === 'heart'){
+    } else if (postNum === 2 || postNum === 12) {
+      if (mark === 'dia' || mark === 'heart') {
         setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    } else if (postNum === 1 || postNum ===13){
-      if (mark === 'spade'){
+    } else if (postNum === 1 || postNum === 13) {
+      if (mark === 'spade') {
         setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }
-    else {
-      ;
+    } else {
     }
   }
 
@@ -138,90 +134,77 @@ export function HighLow({navigation}) {
     }
 
     if (cardCount <= 1 || cardCount >= 55) {
-      ;
-    }
-    else if (postMark === 'joker'){
-      ;
-    }
-    else if (mark === 'joker'){
+    } else if (postMark === 'joker') {
+    } else if (mark === 'joker') {
       setAlcCount(alcCount + 2);
-    }
-    else if (postNum >= 3 && postNum <=11){
-      if (postNum > num){
+    } else if (postNum >= 3 && postNum <= 11) {
+      if (postNum > num) {
         setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }
-    else if (postNum === 2 || postNum === 12){
-      if (mark === 'spade' || mark === 'club'){
+    } else if (postNum === 2 || postNum === 12) {
+      if (mark === 'spade' || mark === 'club') {
         setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }
-    else if (postNum === 1 || postNum ===13){
-      if (mark === 'club'){
+    } else if (postNum === 1 || postNum === 13) {
+      if (mark === 'club') {
         setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }
-    else {
-      ;
+    } else {
     }
   }
-  function checkSwipedRight(cardCount){
-    const num = cards[cardCount].num
-    const mark = cards[cardCount].mark
-    if(cardCount < cards.length){
-      var nextNum = cards[cardCount + 1].num
-      var nextMark = cards[cardCount + 1].mark
-    }else{
-      var nextNum = cards[cardCount].num
-      var nextMark = cards[cardCount].mark
+  function checkSwipedRight(cardCount) {
+    const num = cards[cardCount].num;
+    const mark = cards[cardCount].mark;
+    if (cardCount < cards.length) {
+      var nextNum = cards[cardCount + 1].num;
+      var nextMark = cards[cardCount + 1].mark;
+    } else {
+      var nextNum = cards[cardCount].num;
+      var nextMark = cards[cardCount].mark;
     }
-    if(cardCount >= 1){
-      var postNum = cards[cardCount - 1].num
-      var postMark = cards[cardCount - 1].mark
-    }else{
-      var postNum = cards[cardCount].num
-      var postMark = cards[cardCount].mark
+    if (cardCount >= 1) {
+      var postNum = cards[cardCount - 1].num;
+      var postMark = cards[cardCount - 1].mark;
+    } else {
+      var postNum = cards[cardCount].num;
+      var postMark = cards[cardCount].mark;
     }
 
-    if(cardCount <= 1 || cardCount >= 55){
-      ;
-    } else if (postMark === 'joker'){
-      ;
-    } else if (mark === 'joker'){
+    if (cardCount <= 1 || cardCount >= 55) {
+    } else if (postMark === 'joker') {
+    } else if (mark === 'joker') {
       setAlcCount(alcCount + 2);
     } else if (postNum >= 3 && postNum <= 11) {
       if (postNum < num) {
         setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }else if (postNum === 2 || postNum === 12){
-      if (mark === 'spade' || mark === 'club'){
+    } else if (postNum === 2 || postNum === 12) {
+      if (mark === 'spade' || mark === 'club') {
         setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }else if (postNum === 1 || postNum === 13){
-      if (mark === 'dia'){
+    } else if (postNum === 1 || postNum === 13) {
+      if (mark === 'dia') {
         setDrinkCount(alcCount);
         setAlcCount(0);
-      }else{
+      } else {
         setAlcCount(alcCount + 1);
       }
-    }
-    else {
-      ;
+    } else {
     }
   }
   function checkSwipedLeft(cardCount) {
@@ -243,9 +226,7 @@ export function HighLow({navigation}) {
     }
 
     if (cardCount <= 1 || cardCount >= 55) {
-      ;
     } else if (postMark === 'joker') {
-      ;
     } else if (mark === 'joker') {
       setAlcCount(alcCount + 2);
     } else if (postNum >= 3 && postNum <= 11) {
@@ -270,15 +251,24 @@ export function HighLow({navigation}) {
         setAlcCount(alcCount + 1);
       }
     } else {
-      ;
     }
   }
 
   function showShot(alcCount) {
     var shotView = [];
     return (
-      <View style={{flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
-        <Image source={require('../../../Images/shot.png')} style={{width: width*0.06, height: height*0.06}} resizeMode='contain'/>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Image
+          source={require('../../../Images/shot.png')}
+          style={{width: width * 0.06, height: height * 0.06}}
+          resizeMode="contain"
+        />
         <Text style={{fontSize: 25, color: 'white'}}> × {alcCount}</Text>
       </View>
     );
@@ -296,7 +286,8 @@ export function HighLow({navigation}) {
             </View>
             <TouchableOpacity
               onPress={() => setDrinkCount(0)}
-              style={styles.drinkImageTouchable}>
+              style={styles.drinkImageTouchable}
+            >
               <Image
                 source={require('../../../Images/cheers/cheer_wine.png')}
                 style={{width: width, height: height}}
@@ -322,9 +313,8 @@ export function HighLow({navigation}) {
   function setText(cardCount) {
     const num = cards[cardCount].num;
     if (cardCount >= 54) {
-      ;
-    } else if (num >= 3 && num <= 11){
-      return(
+    } else if (num >= 3 && num <= 11) {
+      return (
         <>
           <View style={styles.topTextbox}>
             <Text style={styles.topText}>High</Text>
@@ -332,9 +322,10 @@ export function HighLow({navigation}) {
           <View style={styles.bottomTextbox}>
             <Text style={styles.bottomText}>Low</Text>
           </View>
-        </>)
-    }else if(num === 2 || num === 12){
-      return(
+        </>
+      );
+    } else if (num === 2 || num === 12) {
+      return (
         <>
           <View style={styles.topTextbox}>
             <Text style={styles.topText}>Red</Text>
@@ -342,25 +333,42 @@ export function HighLow({navigation}) {
           <View style={styles.bottomTextbox}>
             <Text style={styles.bottomText}>Black</Text>
           </View>
-        </>)
-    }else if(num === 1 || num ===　13){
-      return(
+        </>
+      );
+    } else if (num === 1 || num === 13) {
+      return (
         <>
           <View style={styles.topTextbox}>
-            <Image source={require('../../../Images/spade.png')} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
-          </View>    
+            <Image
+              source={require('../../../Images/spade.png')}
+              style={{width: width * 0.1, height: height * 0.1}}
+              resizeMode="contain"
+            />
+          </View>
           <View style={styles.bottomTextbox}>
-            <Image source={require('../../../Images/club.png')} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
+            <Image
+              source={require('../../../Images/club.png')}
+              style={{width: width * 0.1, height: height * 0.1}}
+              resizeMode="contain"
+            />
           </View>
           <View style={styles.rightTextbox}>
-            <Image source={require('../../../Images/dia.png')} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
+            <Image
+              source={require('../../../Images/dia.png')}
+              style={{width: width * 0.1, height: height * 0.1}}
+              resizeMode="contain"
+            />
           </View>
           <View style={styles.leftTextbox}>
-            <Image source={require('../../../Images/heart.png')} style={{width: width*0.1, height: height*0.1}} resizeMode='contain'/>
+            <Image
+              source={require('../../../Images/heart.png')}
+              style={{width: width * 0.1, height: height * 0.1}}
+              resizeMode="contain"
+            />
           </View>
-        </>)
+        </>
+      );
     } else {
-      ;
     }
   }
 
@@ -394,7 +402,8 @@ export function HighLow({navigation}) {
           onSwiped={() => {
             setCardCount(cardCount + 1);
             check1and13(cardCount);
-          }}>
+          }}
+        >
           {cardImages}
           {/*}
           <Components.CardList cardControl={cardControl} cards={cards}/>
@@ -412,7 +421,13 @@ export function HighLow({navigation}) {
       <View style={styles.resetBox}>
         <TouchableOpacity onPress={() => resetCard({navigation})}>
           <View style={styles.reset}>
-            <Text style={{color: 'black', fontSize: height*0.02, fontFamily: 'AppleSDGothicNeo-Light',}}>
+            <Text
+              style={{
+                color: 'black',
+                fontSize: height * 0.02,
+                fontFamily: 'AppleSDGothicNeo-Light',
+              }}
+            >
               Back{/*}{cardCount}{*/}
             </Text>
           </View>
@@ -434,34 +449,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#464646',
   },
   box: {
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: width*0.7, 
-    height: height*0.7,
+    width: width * 0.7,
+    height: height * 0.7,
   },
-  textBox: {
-  },
+  textBox: {},
   topTextbox: {
     position: 'absolute',
     width: width,
-    height: height*0.1,
-    marginTop: height*0.17,
+    height: height * 0.1,
+    marginTop: height * 0.17,
     justifyContent: 'center',
     alignItems: 'center',
   },
   topText: {
     color: 'black',
-    fontSize: height*0.05,
+    fontSize: height * 0.05,
     fontFamily: 'AppleSDGothicNeo-Bold',
-    color: 'white'
+    color: 'white',
   },
   bottomTextbox: {
     position: 'absolute',
     width: width,
-    height: height*0.1,
-    marginTop: height*0.73,
+    height: height * 0.1,
+    marginTop: height * 0.73,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -474,31 +488,31 @@ const styles = StyleSheet.create({
   rightTextbox: {
     position: 'absolute',
     width: width,
-    height: height*0.15,
-    marginTop: height*0.425,
+    height: height * 0.15,
+    marginTop: height * 0.425,
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
   leftTextbox: {
     position: 'absolute',
     width: width,
-    height: height*0.15,
-    marginTop: height*0.425,
+    height: height * 0.15,
+    marginTop: height * 0.425,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
   resetBox: {
-    width: width*1,
+    width: width * 1,
     position: 'absolute',
-    marginTop: height*0.9,
+    marginTop: height * 0.9,
     marginRight: 0,
     flexDirection: 'column',
     alignItems: 'flex-end',
-    paddingRight: width*0.05,
+    paddingRight: width * 0.05,
   },
   reset: {
-    height: height*0.05,
-    width: width*0.2,
+    height: height * 0.05,
+    width: width * 0.2,
     borderRadius: 30,
     backgroundColor: '#F2F2F2',
     borderLeftColor: '#FFFFFF',
@@ -514,13 +528,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   alcCount: {
-    width: width*1,
+    width: width * 1,
     position: 'absolute',
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    marginTop: height*0.9,
-    marginLeft: height*0.03,
+    marginTop: height * 0.9,
+    marginLeft: height * 0.03,
   },
   shot: {
     position: 'absolute',

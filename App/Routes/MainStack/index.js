@@ -8,6 +8,8 @@ import {
   SETTINGS,
   HARDMODE,
   RESULT,
+  ROULETTE,
+  OJISAN,
 } from '../../Constants/path';
 import {
   HighLow,
@@ -16,6 +18,8 @@ import {
   Settings,
   HardMode,
   Result,
+  Roulette,
+  Ojisan,
 } from '../../Modules/pages';
 import * as Contexts from '../../Context';
 
@@ -32,6 +36,8 @@ export default function MainStack() {
           <Stack.Screen name={SETTINGS} component={Settings} />
           <Stack.Screen name={HARDMODE} component={HardMode} />
           <Stack.Screen name={RESULT} component={Result} />
+          <Stack.Screen name={ROULETTE} component={Roulette} />
+          <Stack.Screen name={OJISAN} component={Ojisan} />
         </Stack.Navigator>
       </Contexts.UserListProvider>
     </NavigationContainer>
