@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
@@ -6,6 +7,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 } from 'react-native';
 import {CARDLIST} from '../../../Constants/CardList';
 import CardStack, {Card} from 'react-native-card-stack-swiper';
@@ -21,7 +23,9 @@ const shuffle = ([...array]) => {
   return array;
 };
 
-export function SevenHeaven({navigation}) {
+export function SevenHeaven({
+  navigation
+}: any) {
   const [cardCount, setCardCount] = useState(0);
   const [cards, setCards] = useState(CARDLIST.data);
   const [cardImages, setCardImages] = useState([]);
@@ -32,6 +36,7 @@ export function SevenHeaven({navigation}) {
     var Views = [];
     for (let i = 0; i < cards.length; i++) {
       Views.push(
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <Image
           source={shuffledCards[i].uri}
           style={{width: width * 0.7, height: height * 0.9}}
@@ -42,7 +47,9 @@ export function SevenHeaven({navigation}) {
     setCardImages(Views);
   }, []);
 
-  function resetCard({navigation}) {
+  function resetCard({
+    navigation
+  }: any) {
     navigation.navigate(HOME);
   }
   function setText() {
@@ -81,16 +88,21 @@ export function SevenHeaven({navigation}) {
     }
     console.log(text);
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <View style={styles.topTextbox}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Text style={styles.topText}>{text}</Text>
       </View>
     );
   }
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <View style={styles.container}>
       {setText()}
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.box}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardStack
           style={styles.box}
           verticalSwipe={true}
@@ -105,9 +117,13 @@ export function SevenHeaven({navigation}) {
           {cardImages}
         </CardStack>
       </View>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.resetBox}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TouchableOpacity onPress={() => resetCard({navigation})}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.reset}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text
               style={{
                 color: 'black',
@@ -133,6 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     backgroundColor: '#464646',
   },
   box: {

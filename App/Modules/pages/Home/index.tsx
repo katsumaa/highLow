@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React, {useState} from 'react';
 import {
   View,
@@ -8,6 +9,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Settings,
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 } from 'react-native';
 import {
   HIGHLOW,
@@ -23,19 +25,26 @@ import {defaultUserList} from '../../../Constants/defaultUserList';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-export function Home({navigation}) {
+export function Home({
+  navigation
+}: any) {
   const [buttonCount, setButtonCount] = useState(0);
   const [userList, setUserList] = useState(defaultUserList);
 
-  function changeHardMode({navigation}) {
+  function changeHardMode({
+    navigation
+  }: any) {
     if (buttonCount >= 3) {
       return (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <View style={styles.image}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <TouchableOpacity
             onPress={() => (
               navigation.navigate(HARDMODE), setButtonCount(0)
             )}
           >
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/shot.png')}
               resizeMode="contain"
@@ -46,12 +55,15 @@ export function Home({navigation}) {
       );
     } else {
       return (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <View style={styles.image}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <TouchableOpacity
             onPress={() => {
               setButtonCount(buttonCount + 1);
             }}
           >
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/shot.png')}
               resizeMode="contain"
@@ -63,35 +75,57 @@ export function Home({navigation}) {
     }
   }
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <View style={styles.container}>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.blankTopHeader} />
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <TouchableOpacity onPress={() => navigation.navigate(HIGHLOW)}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <View style={styles.view}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.text}>HighLow</Text>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.reverseText}>HighLow</Text>
         </View>
       </TouchableOpacity>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <TouchableOpacity onPress={() => navigation.navigate(SEVENHEAVEN)}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <View style={styles.view}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.text}>King's Cup</Text>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.reverseText}>King's Cup</Text>
         </View>
       </TouchableOpacity>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <TouchableOpacity onPress={() => navigation.navigate(OJISAN)}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <View style={styles.view}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.text}>OJISAN</Text>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.reverseText}>OJISAN</Text>
         </View>
       </TouchableOpacity>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <TouchableOpacity onPress={() => navigation.navigate(ROULETTE)}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <View style={styles.view}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.text}>Roulette</Text>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.reverseText}>Roulette</Text>
         </View>
       </TouchableOpacity>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <TouchableOpacity onPress={() => navigation.navigate(RESULT)}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <View style={styles.view}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.text}>Trueth or Dare</Text>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text style={styles.reverseText}>Trueth or Dare</Text>
         </View>
       </TouchableOpacity>
@@ -116,6 +150,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     backgroundColor: '#464646',
   },
   blankTopHeader: {

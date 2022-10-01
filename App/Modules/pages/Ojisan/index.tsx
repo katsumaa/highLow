@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React, {useContext, useRef, useState} from 'react';
 import {
   Dimensions,
@@ -7,14 +8,17 @@ import {
   Image,
   Animated,
   FlatList,
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 } from 'react-native';
 import * as Contexts from '../../../Context';
+// @ts-expect-error TS(2307): Cannot find module '../../Constants/path' or its c... Remove this comment to see the full error message
 import {HOME} from '../../Constants/path';
 import {
   PanGestureHandler,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 const {height, width} = Dimensions.get('window');
+// @ts-expect-error TS(2613): Module '"/Users/user/work/highLow/App/Constants/oj... Remove this comment to see the full error message
 import OJI_DEFAULT from '../../../Constants/oji';
 
 console.log('ojidefault', OJI_DEFAULT);
@@ -38,11 +42,14 @@ function renderImage() {
 export function Ojisan() {
   const [data, setData] = useState();
   //console.log('data', OJI_DEFAULT);
-  const renderImage = item => {
+  const renderImage = (item: any) => {
     console.log(item);
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <View style={styles.imageBox}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TouchableOpacity>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Image
             style={styles.image}
             source={item.item.url}
@@ -53,19 +60,25 @@ export function Ojisan() {
     );
   };
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <View style={styles.container}>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.header}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Text>Drink if you missed</Text>
       </View>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.middle}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <FlatList
           data={data}
           renderItem={renderImage}
-          keyExtractor={item => item.id}
+          keyExtractor={(item: any) => item.id}
           horizontal={false}
           numColumns={4}
         />
       </View>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.bottom}></View>
     </View>
   );

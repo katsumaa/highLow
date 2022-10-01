@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
@@ -9,7 +10,9 @@ import {
   TextInput,
   FlatList,
   ScrollView,
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 } from 'react-native';
+// @ts-expect-error TS(2307): Cannot find module '../../../Constants/path' or it... Remove this comment to see the full error message
 import {HOME} from '../../../Constants/path';
 import * as Contexts from '../../Context';
 
@@ -22,7 +25,7 @@ export function RegisterUser() {
   const addUser = () => {
     console.log(userList);
     const num = userList[userList.length - 1].id + 2;
-    const checkTurnFocus = userList.some(element => element.turnFocus === true);
+    const checkTurnFocus = userList.some((element: any) => element.turnFocus === true);
     //TODO: turnFocus:trueが存在するかで場合分けする必要がある
     setUserList([
       ...userList,
@@ -36,11 +39,11 @@ export function RegisterUser() {
     ]);
   };
 
-  const deleteUser = (id, item) => {
+  const deleteUser = (id: any, item: any) => {
     console.log(userList);
     console.log('id', id);
     if (userList.length >= 2) {
-      const newList = userList.filter(element => element.id !== id);
+      const newList = userList.filter((element: any) => element.id !== id);
       if (item.turnFocus) {
         newList[0].turnFocus = true;
       }
@@ -66,7 +69,9 @@ export function RegisterUser() {
   }
 */
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <View style={styles.container}>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View
         style={{
           height: height * 0.2,
@@ -74,19 +79,27 @@ export function RegisterUser() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center"}}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Text style={{fontSize: 40, color: "white"}}>Input Name</Text>
       </View>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <FlatList
         data={userList}
         showsHorizontalScrollIndicator={true}
         style={styles.flatList}
         //keyExtractor={item => item.id}
-        renderItem={({item, index}) => (
+        renderItem={({
+          item,
+          index
+        }: any) => (
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <View style={{flexDirection: 'row'}}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <View style={styles.userName}>
+              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <TextInput
                 value={item.name}
-                onChangeText={value => {
+                onChangeText={(value: any) => {
                   var newUserList = userList;
                   newUserList[index].name = value;
                   console.log(newUserList);
@@ -95,21 +108,27 @@ export function RegisterUser() {
                 style={styles.input}
               />
             </View>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TouchableOpacity onPress={() => deleteUser(item.id, item)}>
+              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <View style={styles.closeButton}>
+                {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <Text style={{fontSize: 30}}>×</Text>
               </View>
             </TouchableOpacity>
           </View>
         )}
       />
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <TouchableOpacity onPress={() => (addUser())}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <View style={styles.addUser}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Text>＋</Text>
         </View>
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -129,6 +148,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     backgroundColor: "white",
     borderRadius: 30,
     margin: 20,

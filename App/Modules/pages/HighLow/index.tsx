@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
@@ -6,9 +7,11 @@ import {
   Image,
   Text,
   TouchableOpacity,
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 } from 'react-native';
 import {CARDLIST} from '../../../Constants/CardList';
 import CardStack, {Card} from 'react-native-card-stack-swiper';
+// @ts-expect-error TS(2724): '"../../../Constants/path"' has no exported member... Remove this comment to see the full error message
 import {HOME, RESULT, Result} from '../../../Constants/path';
 import * as Components from '../../../Components';
 import * as Contexts from '../../../Context';
@@ -24,19 +27,23 @@ const shuffle = ([...array]) => {
   return array;
 };
 
-function addCardList(cardControl, cards, shuffledCards) {
+function addCardList(cardControl: any, cards: any, shuffledCards: any) {
   var Views = [];
   for (let i = 0; i < cards.length; i++) {
     Views.push(
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Card>
           {cardControl ? (
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <Image
               source={shuffledCards[i].uri}
               style={{width: width * 0.7, height: height * 0.9}}
               resizeMode="contain"
             />
           ) : (
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <Image
               source={require('../../../Images/reverse.png')}
               style={{width: width * 0.7, height: height * 0.9}}
@@ -50,7 +57,9 @@ function addCardList(cardControl, cards, shuffledCards) {
   return Views;
 }
 
-export function HighLow({navigation}) {
+export function HighLow({
+  navigation
+}: any) {
   const [cardCount, setCardCount] = useState(0);
   const [horizontalSwipe, setHorizontalSwipe] = useState(false);
   const [alcCount, setAlcCount] = useState(0);
@@ -68,7 +77,7 @@ export function HighLow({navigation}) {
     setCardImages(Views);
   }, []);
 
-  function checkSwipedTop(cardCount) {
+  function checkSwipedTop(cardCount: any) {
     const num = cards[cardCount].num;
     const mark = cards[cardCount].mark;
     if (cardCount < cards.length) {
@@ -115,7 +124,7 @@ export function HighLow({navigation}) {
     }
   }
 
-  function checkSwipedBottom(cardCount) {
+  function checkSwipedBottom(cardCount: any) {
     const num = cards[cardCount].num;
     const mark = cards[cardCount].mark;
     if (cardCount < cards.length) {
@@ -161,7 +170,7 @@ export function HighLow({navigation}) {
     } else {
     }
   }
-  function checkSwipedRight(cardCount) {
+  function checkSwipedRight(cardCount: any) {
     const num = cards[cardCount].num;
     const mark = cards[cardCount].mark;
     if (cardCount < cards.length) {
@@ -207,7 +216,7 @@ export function HighLow({navigation}) {
     } else {
     }
   }
-  function checkSwipedLeft(cardCount) {
+  function checkSwipedLeft(cardCount: any) {
     const num = cards[cardCount].num;
     const mark = cards[cardCount].mark;
     if (cardCount < cards.length) {
@@ -254,9 +263,10 @@ export function HighLow({navigation}) {
     }
   }
 
-  function showShot(alcCount) {
+  function showShot(alcCount: any) {
     var shotView = [];
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <View
         style={{
           flexDirection: 'row',
@@ -264,30 +274,38 @@ export function HighLow({navigation}) {
           alignItems: 'center',
         }}
       >
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Image
           source={require('../../../Images/shot.png')}
           style={{width: width * 0.06, height: height * 0.06}}
           resizeMode="contain"
         />
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Text style={{fontSize: 25, color: 'white'}}> × {alcCount}</Text>
       </View>
     );
   }
 
-  function showDrinkImage(drinkCount) {
+  function showDrinkImage(drinkCount: any) {
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <>
         {drinkCount !== 0 && (
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <View style={styles.drinkImageView}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <View style={styles.drinkImageText}>
+              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <Text style={{fontSize: height * 0.05, color: 'red'}}>
                 {drinkCount} Shot!
               </Text>
             </View>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TouchableOpacity
               onPress={() => setDrinkCount(0)}
               style={styles.drinkImageTouchable}
             >
+              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <Image
                 source={require('../../../Images/cheers/cheer_wine.png')}
                 style={{width: width, height: height}}
@@ -300,7 +318,7 @@ export function HighLow({navigation}) {
     );
   }
 
-  function check1and13(cardCount) {
+  function check1and13(cardCount: any) {
     setHorizontalSwipe(
       cards[cardCount + 1].num !== 13 &&
         cards[cardCount + 1].num !== 1 &&
@@ -310,56 +328,75 @@ export function HighLow({navigation}) {
     console.log(horizontalSwipe);
   }
 
-  function setText(cardCount) {
+  function setText(cardCount: any) {
     const num = cards[cardCount].num;
     if (cardCount >= 54) {
     } else if (num >= 3 && num <= 11) {
       return (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.topTextbox}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text style={styles.topText}>High</Text>
           </View>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.bottomTextbox}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text style={styles.bottomText}>Low</Text>
           </View>
         </>
       );
     } else if (num === 2 || num === 12) {
       return (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.topTextbox}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text style={styles.topText}>Red</Text>
           </View>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.bottomTextbox}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text style={styles.bottomText}>Black</Text>
           </View>
         </>
       );
     } else if (num === 1 || num === 13) {
       return (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.topTextbox}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/spade.png')}
               style={{width: width * 0.1, height: height * 0.1}}
               resizeMode="contain"
             />
           </View>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.bottomTextbox}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/club.png')}
               style={{width: width * 0.1, height: height * 0.1}}
               resizeMode="contain"
             />
           </View>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.rightTextbox}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/dia.png')}
               style={{width: width * 0.1, height: height * 0.1}}
               resizeMode="contain"
             />
           </View>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.leftTextbox}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/heart.png')}
               style={{width: width * 0.1, height: height * 0.1}}
@@ -372,7 +409,9 @@ export function HighLow({navigation}) {
     }
   }
 
-  function resetCard({navigation}) {
+  function resetCard({
+    navigation
+  }: any) {
     navigation.navigate(HOME);
   }
   function navigateToResult() {
@@ -380,11 +419,15 @@ export function HighLow({navigation}) {
   }
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <View style={styles.container}>
       {showDrinkImage(drinkCount)}
       {setText(cardCount)}
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Components.PlayerTurn userList={userList} />
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.box}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardStack
           style={styles.box}
           onSwipedTop={() => checkSwipedTop(cardCount)}
@@ -410,7 +453,9 @@ export function HighLow({navigation}) {
         {*/}
         </CardStack>
       </View>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.shot}>{showShot(alcCount)}</View>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.alcCount}>
         {/*}
         <Text style={{color: 'black', fontSize: height*0.06, fontFamily: 'AppleSDGothicNeo-Light',}}>
@@ -418,9 +463,13 @@ export function HighLow({navigation}) {
         </Text>
         {*/}
       </View>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.resetBox}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <TouchableOpacity onPress={() => resetCard({navigation})}>
+          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.reset}>
+            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text
               style={{
                 color: 'black',
@@ -446,6 +495,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     backgroundColor: '#464646',
   },
   box: {
@@ -469,6 +519,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: height * 0.05,
     fontFamily: 'AppleSDGothicNeo-Bold',
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     color: 'white',
   },
   bottomTextbox: {
@@ -483,6 +534,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: height * 0.05,
     fontFamily: 'AppleSDGothicNeo-Bold',
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     color: 'white',
   },
   rightTextbox: {

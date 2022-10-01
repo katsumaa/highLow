@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React, {useContext, useRef} from 'react';
 import {
   Dimensions,
@@ -6,8 +7,10 @@ import {
   Text,
   Image,
   Animated,
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 } from 'react-native';
 import * as Contexts from '../../../Context';
+// @ts-expect-error TS(2307): Cannot find module '../../Constants/path' or its c... Remove this comment to see the full error message
 import {HOME} from '../../Constants/path';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 const {height, width} = Dimensions.get('window');
@@ -26,8 +29,11 @@ export function Roulette() {
     {useNativeDriver: true},
   );
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <View style={styles.container}>
+      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <PanGestureHandler ref={ref} onGestureEvent={onPanGestureEvent}>
+        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Animated.View
           style={[
             styles.circle,
