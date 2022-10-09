@@ -4,7 +4,7 @@ _HighLowVersionNumber
 Apple clang version 13.1.6 (clang-1316.0.21.2.3)
 /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.4.sdk
 iPhoneOS15.4.sdk
-/Users/user/Library/Developer/Xcode/DerivedData/HighLow-boshkvkekfagtwhcskfvvivmzljw/Build/Intermediates.noindex/ArchiveIntermediates/HighLow/IntermediateBuildFilesPath/highlow.build/Release-iphoneos/highlow.build/DerivedSources/highlow_vers.c
+/Users/user/Library/Developer/Xcode/DerivedData/HighLow-boshkvkekfagtwhcskfvvivmzljw/Build/Intermediates.noindex/ArchiveIntermediates/HighLow/IntermediateBuildFilesPath/HighLow.build/Release-iphoneos/HighLow.build/DerivedSources/HighLow_vers.c
 /Users/user/work/HighLow/ios
 -[AppDelegate application:didFinishLaunchingWithOptions:]
 -[AppDelegate sourceURLForBridge:]
@@ -62,12 +62,12 @@ __OBJC_$_INSTANCE_VARIABLES_AppDelegate
 __OBJC_$_PROP_LIST_AppDelegate
 __OBJC_CLASS_RO_$_AppDelegate
 _OBJC_CLASS_$_AppDelegate
-/Users/user/work/highLow/ios/highlow/AppDelegate.m
-highlow/AppDelegate.m
-highlow/AppDelegate.h
-/Users/user/work/highLow/ios/highlow/main.m
+/Users/user/work/highLow/ios/HighLow/AppDelegate.m
+HighLow/AppDelegate.m
+HighLow/AppDelegate.h
+/Users/user/work/highLow/ios/HighLow/main.m
 main
-highlow/main.m
+HighLow/main.m
 __OBJC_METACLASS_RO_$_PodsDummy_CocoaAsyncSocket
 _OBJC_METACLASS_$_PodsDummy_CocoaAsyncSocket
 __OBJC_CLASS_RO_$_PodsDummy_CocoaAsyncSocket
@@ -28186,11 +28186,11 @@ _RNCSafeAreaViewMode:.onceToken
 /Users/user/work/highLow/node_modules/react-native-safe-area-context/ios/SafeAreaView/RNCSafeAreaViewMode.m
 __51+[RCTConvert(RNCSafeAreaView) RNCSafeAreaViewMode:]_block_invoke
 node_modules/react-native-safe-area-context/ios/SafeAreaView/RNCSafeAreaViewMode.m
-__OBJC_METACLASS_RO_$_PodsDummy_Pods_highlow
-_OBJC_METACLASS_$_PodsDummy_Pods_highlow
-__OBJC_CLASS_RO_$_PodsDummy_Pods_highlow
-_OBJC_CLASS_$_PodsDummy_Pods_highlow
-/Users/user/work/highLow/ios/Pods/Target Support Files/Pods-highlow/Pods-highlow-dummy.m
+__OBJC_METACLASS_RO_$_PodsDummy_Pods_HighLow
+_OBJC_METACLASS_$_PodsDummy_Pods_HighLow
+__OBJC_CLASS_RO_$_PodsDummy_Pods_HighLow
+_OBJC_CLASS_$_PodsDummy_Pods_HighLow
+/Users/user/work/highLow/ios/Pods/Target Support Files/Pods-HighLow/Pods-HighLow-dummy.m
 _swift_getFunctionTypeMetadataGlobalActorBackDeploy
 ___swift_getFunctionTypeMetadataGlobalActorBackDeploy_block_invoke
 __ZZ50swift_getFunctionTypeMetadataGlobalActorBackDeployE9builderFn

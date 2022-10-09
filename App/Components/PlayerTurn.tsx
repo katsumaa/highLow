@@ -1,5 +1,5 @@
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -13,18 +13,18 @@ import {
   // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 } from 'react-native';
 // @ts-expect-error TS(2307): Cannot find module '../../../Constants/path' or it... Remove this comment to see the full error message
-import { HOME } from '../../../Constants/path';
+import {HOME} from '../../../Constants/path';
 import * as Contexts from '../Context';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const {width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 export function PlayerTurn(props: any) {
-  const { userList } = Contexts.useUserListContext();
+  const {userList} = Contexts.useUserListContext();
   const [currentPlayer, setCurrentPlayer] = useState(
     userList[0],
   );
-  //TODO:turn Focusのbloon仁応じてターンユーザーを選ぶ関数を追加
+  //TODO:turn Focusのbloonに応じてターンユーザーを選ぶ関数を追加
   useEffect(() => {
     let num = 0;
     for (let i = 0; i < userList.length; i++) {
