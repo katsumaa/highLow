@@ -1,5 +1,4 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -7,40 +6,43 @@ import {
   Text,
   Image,
   FlatList,
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 } from 'react-native';
 import * as Contexts from '../../../Context';
 
-// @ts-expect-error TS(2307): Cannot find module '../../Constants/path' or its c... Remove this comment to see the full error message
-import {HOME} from '../../Constants/path';
+import { HOME } from '../../Constants/path';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
+
+const crownImage = {
+  first: require('../../../Images/ranking/firstIcon.png'),
+  second: require('../../../Images/ranking/secondIcon.png'),
+  third: require('../../../Images/ranking/thirdIcon.png'),
+};
 
 export function Result() {
-  const {userList} = Contexts.useUserListContext();
+  const { userList } = Contexts.useUserListContext();
+  console.log({ userList });
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <View style={styles.container}>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.header}>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Text style={styles.titleText}>Result</Text>
       </View>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.content}>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <View style={styles.contentBox}>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.rankBox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <Image source={require('../../../Images/crown.png')} />
+            <Image
+              style={styles.image}
+              source={require('../../../Images/ranking/firstIcon.png')}
+              resizeMode={'contain'}
+            />
           </View>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.userBox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <Image />
+            <Image
+              style={styles.image}
+              source={userList[0]?.image}
+              resizeMode={'contain'}
+            />
           </View>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.countBox}></View>
         </View>
       </View>
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
   },
   rankBox: {
     height: '80%',
-    width: '25%',
+    width: '15%',
     backgroundColor: 'skyblue',
     justifyContent: 'center',
     alignItems: 'center',
@@ -93,7 +95,6 @@ const styles = StyleSheet.create({
     width: '40%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
   },
   countBox: {
     height: '80%',
@@ -104,5 +105,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 40,
     fontFamily: 'AppleSDGothicNeo-UltraLight',
+  },
+  image: {
+    height: '100%',
+    width: '100%',
   },
 });

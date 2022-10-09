@@ -5,13 +5,13 @@
 	<key>ApplicationProperties</key>
 	<dict>
 		<key>ApplicationPath</key>
-		<string>Applications/highlow.app</string>
+		<string>Applications/HighLow.app</string>
 		<key>Architectures</key>
 		<array>
 			<string>arm64</string>
 		</array>
 		<key>CFBundleIdentifier</key>
-		<string>org.reactjs.native.example.highlow1234</string>
+		<string>org.reactjs.native.example.HighLow1234</string>
 		<key>CFBundleShortVersionString</key>
 		<string>1.0</string>
 		<key>CFBundleVersion</key>
@@ -26,8 +26,8 @@
 	<key>CreationDate</key>
 	<date>2022-04-13T02:20:51Z</date>
 	<key>Name</key>
-	<string>highlow</string>
+	<string>HighLow</string>
 	<key>SchemeName</key>
-	<string>highlow</string>
+	<string>HighLow</string>
 </dict>
 </plist>

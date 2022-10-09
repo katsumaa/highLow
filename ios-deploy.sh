@@ -1,14 +1,14 @@
 #source .env
 cd ios && pod install
 xcodebuild   \
-  -workspace "highlow.xcworkspace"  \
-  -scheme "highlow"  \
+  -workspace "HighLow.xcworkspace"  \
+  -scheme "HighLow"  \
    archive  \
-    -archivePath ".target/highlow.xcarchive"
+    -archivePath ".target/HighLow.xcarchive"
 
 xcodebuild  \
   -exportArchive  \
-  -archivePath ".target/highlow.xcarchive"  \
+  -archivePath ".target/HighLow.xcarchive"  \
   -exportPath "../archive"  \
   -exportOptionsPlist "build/firstBuildPlist"
 

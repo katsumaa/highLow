@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '14.6'
 
-target 'highlow' do
+target 'HighLow' do
   config = use_native_modules!
 
   use_react_native!(
@@ -14,7 +14,7 @@ target 'highlow' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-  target 'highlowTests' do
+  target 'HighLowTests' do
     inherit! :complete
     # Pods for testing
   end

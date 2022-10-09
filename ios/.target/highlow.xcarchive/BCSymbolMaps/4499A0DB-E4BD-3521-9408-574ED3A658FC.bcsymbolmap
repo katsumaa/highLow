@@ -1,11 +1,11 @@
 BCSymbolMap Version: 2.0
-_highlowVersionString
-_highlowVersionNumber
+_HighLowVersionString
+_HighLowVersionNumber
 Apple clang version 13.1.6 (clang-1316.0.21.2.3)
 /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.4.sdk
 iPhoneOS15.4.sdk
-/Users/user/Library/Developer/Xcode/DerivedData/highlow-boshkvkekfagtwhcskfvvivmzljw/Build/Intermediates.noindex/ArchiveIntermediates/highlow/IntermediateBuildFilesPath/highlow.build/Release-iphoneos/highlow.build/DerivedSources/highlow_vers.c
-/Users/user/work/highLow/ios
+/Users/user/Library/Developer/Xcode/DerivedData/HighLow-boshkvkekfagtwhcskfvvivmzljw/Build/Intermediates.noindex/ArchiveIntermediates/HighLow/IntermediateBuildFilesPath/highlow.build/Release-iphoneos/highlow.build/DerivedSources/highlow_vers.c
+/Users/user/work/HighLow/ios
 -[AppDelegate application:didFinishLaunchingWithOptions:]
 -[AppDelegate sourceURLForBridge:]
 -[AppDelegate window]
