@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-} from 'react';
-import { defaultUserList } from '../Constants/defaultUserList';
+import React, {createContext, useState, useContext} from 'react';
 
 const UserListContext = createContext();
 
@@ -18,6 +12,7 @@ type userScore = {
   score: number;
   totalScore: number;
   name?: string;
+  turnFocus: boolean;
 };
 
 const userIconPath = [
@@ -28,14 +23,17 @@ const userIconPath = [
   require('../Images/userIcons/userIcon_4.png'),
   require('../Images/userIcons/userIcon_5.png'),
 ];
-const iconNumber = userIconPath.length;
+const iconCount = userIconPath.length;
 
-export function UserListProvider({ children }: any) {
+export function UserListProvider({children}: any) {
   const [userList, setUserList] = useState<userScore[]>([]);
-  const mkUserScores = (number: number) => {
+  const [isInitialUserList, setIsInitialUserList] = useState<string>(true);
+  console.log(userList.map(e => e.score));
+
+  function setInitialUserList(number: number) {
     const users = [];
     //シャッフルアルゴリズム
-    let variables = iconNumber;
+    let variables = iconCount;
     while (variables) {
       const j = Math.floor(Math.random() * variables);
       const t = userIconPath[--variables];
@@ -44,23 +42,68 @@ export function UserListProvider({ children }: any) {
     }
 
     for (let i = 0; i < number; i++) {
-      const randomCount = Math.floor(
-        Math.random() * iconNumber,
-      );
+      const randomCount = Math.floor(Math.random() * iconCount);
       users.push({
-        id: number,
+        id: i,
         image:
-          i < iconNumber
-            ? userIconPath[i]
-            : userIconPath[randomCount],
+          i <= iconCount ? userIconPath[i] : userIconPath[randomCount],
         score: 0,
         totalScore: 0,
+        turnFocus: i === 0,
       });
     }
-    console.log({ users });
+    isInitialUserList && setIsInitialUserList(false);
     setUserList(users);
+  }
+
+  function setTotalScore() {
+    const newUserList = userList.map(e => {
+      return {
+        ...e,
+        totalScore: e.totalScore + e.score,
+      };
+    });
+    setUserList(newUserList);
+  }
+
+  function resetScore() {
+    const newUserList = userList.map(e => {
+      return {
+        ...e,
+        score: 0,
+      };
+    });
+    setUserList(newUserList);
+  }
+
+  function setNextTurnFocus(drinkCount = 0) {
+    console.log({drinkCount});
+    const currentUserId = userList.find(e => e.turnFocus).id;
+    const nextUserId =
+      currentUserId === userList.length - 1 ? 0 : currentUserId + 1;
+    const newUserList = userList.map(e => {
+      if (e.id === currentUserId) {
+        const currentScoroe = e.score;
+        return {...e, turnFocus: false, score: currentScoroe + drinkCount};
+      } else if (e.id === nextUserId) {
+        return {...e, turnFocus: true};
+      } else {
+        return e;
+      }
+    });
+    console.log({newUserList});
+    setUserList(newUserList);
+  }
+
+  const value = {
+    userList,
+    setUserList,
+    setInitialUserList,
+    isInitialUserList,
+    setNextTurnFocus,
+    setTotalScore,
+    resetScore,
   };
-  const value = { userList, setUserList, mkUserScores };
 
   return (
     <UserListContext.Provider value={value}>

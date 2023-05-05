@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -18,24 +18,26 @@ import {
   ROULETTE,
   OJISAN,
 } from '../../../Constants/path';
-import { defaultUserList } from '../../../Constants/defaultUserList';
+import * as Contexts from 'HighLow/App/Context';
+import {defaultUserList} from '../../../Constants/defaultUserList';
 import * as Components from '../../../Components';
+import {TRUETH_OR_DARE} from '../../../Constants/path';
 
-const height = Dimensions.get('window').height;
-const width = Dimensions.get('window').width;
+const {height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
-export function Home({ navigation }: any) {
+export function Home({navigation}: any) {
+  const {isInitialUserList} = Contexts.useUserListContext();
   const [buttonCount, setButtonCount] = useState(0);
-  const [userList, setUserList] = useState(defaultUserList);
+  const [numberModal, setNumberModal] = useState<boolean>(true);
 
-  function changeHardMode({ navigation }: any) {
+  function changeHardMode({navigation}: any) {
     if (buttonCount >= 3) {
       return (
         <View style={styles.image}>
           <TouchableOpacity
             onPress={() => (
-              navigation.navigate(HARDMODE),
-              setButtonCount(0)
+              navigation.navigate(HARDMODE), setButtonCount(0)
             )}
           >
             <Image
@@ -73,46 +75,36 @@ export function Home({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.blankTopHeader} />
-      <TouchableOpacity
-        onPress={() => navigation.navigate(HIGHLOW)}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate(HIGHLOW)}>
         <View style={styles.view}>
           <Text style={styles.text}>HighLow</Text>
           <Text style={styles.reverseText}>HighLow</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate(SEVENHEAVEN)}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate(SEVENHEAVEN)}>
         <View style={styles.view}>
           <Text style={styles.text}>King's Cup</Text>
           <Text style={styles.reverseText}>King's Cup</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate(OJISAN)}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate(OJISAN)}>
         <View style={styles.view}>
           <Text style={styles.text}>OJISAN</Text>
           <Text style={styles.reverseText}>OJISAN</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate(ROULETTE)}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate(ROULETTE)}>
         <View style={styles.view}>
           <Text style={styles.text}>Roulette</Text>
           <Text style={styles.reverseText}>Roulette</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate(RESULT)}
+        onPress={() => navigation.navigate(TRUETH_OR_DARE)}
       >
         <View style={styles.view}>
           <Text style={styles.text}>Trueth or Dare</Text>
-          <Text style={styles.reverseText}>
-            Trueth or Dare
-          </Text>
+          <Text style={styles.reverseText}>Trueth or Dare</Text>
         </View>
       </TouchableOpacity>
       {/*}
@@ -123,8 +115,13 @@ export function Home({ navigation }: any) {
         </View>
       </TouchableOpacity>
   {*/}
-      {changeHardMode({ navigation })}
-      <Components.SetNumberModal />
+      {changeHardMode({navigation})}
+      {isInitialUserList && (
+        <Components.SetNumberModal
+          numberModal={numberModal}
+          setNumberModal={setNumberModal}
+        />
+      )}
     </View>
   );
 }
@@ -160,7 +157,7 @@ const styles = StyleSheet.create({
   reverseText: {
     height: '50%',
     width: '100%',
-    transform: [{ rotateX: '180deg' }],
+    transform: [{rotateX: '180deg'}],
     color: 'white',
     fontSize: height * 0.05,
     fontFamily: 'AppleSDGothicNeo-UltraLight',
@@ -169,14 +166,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   image: {
+    position: 'absolute',
     width: width * 0.9,
     height: height * 0.13,
+    bottom: height * 0.02,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
-  },
-  touchableOpacity: {
-    height: '100%',
-    width: '100%',
   },
 });

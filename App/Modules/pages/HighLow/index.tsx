@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
-import { CARDLIST } from '../../../Constants/CardList';
-import CardStack, { Card } from '../../../Components/ThirdPartyComponents/react-native-card-stack-swiper';
-import { HOME, RESULT, Result } from '../../../Constants/path';
+import React, {useState, useEffect} from 'react';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {CARDLIST} from '../../../Constants/CardList';
+import CardStack, {
+  Card,
+} from '../../../Components/ThirdPartyComponents/react-native-card-stack-swiper';
+import {HOME, RESULT, Result} from '../../../Constants/path';
 import * as Components from '../../../Components';
 import * as Contexts from '../../../Context';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const {width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 const shuffle = ([...array]) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -17,57 +26,31 @@ const shuffle = ([...array]) => {
   return array;
 };
 
-function addCardList(cardControl: any, cards: any, shuffledCards: any) {
-  const Views = [];
-  for (let i = 0; i < cards.length; i++) {
-    Views.push(
-      <>
-        <Card>
-          {cardControl ? (
-            <Image
-              source={shuffledCards[i].uri}
-              style={{ width: width * 0.7, height: height * 0.9 }}
-              resizeMode="contain"
-            />
-          ) : (
-            <Image
-              source={require('../../../Images/reverse.png')}
-              style={{ width: width * 0.7, height: height * 0.9 }}
-              resizeMode="contain"
-            />
-          )}
-        </Card>
-      </>,
-    );
-  }
-  return Views;
-}
+const directionName = {
+  top: 'top',
+  bottom: 'bottom',
+  right: 'right',
+  left: 'left',
+};
 
-export function HighLow({ navigation }: any) {
-  const [cardCount, setCardCount] = useState(0);
-  const [horizontalSwipe, setHorizontalSwipe] = useState(false);
-  const [alcCount, setAlcCount] = useState(0);
-  const [drinkCount, setDrinkCount] = useState(0);
-  const [cards, setCards] = useState(CARDLIST.data);
-  const [cardImages, setCardImages] = useState([]);
-  const { userList } = Contexts.useUserListContext();
-  const [cardControl, setCardControl] = useState(true);
-  console.log('cardControl', cardImages[0]);
-
-  useEffect(() => {
-    const shuffledCards = shuffle(cards);
-    setCards(shuffledCards);
-    const Views = addCardList(cardControl, cards, shuffledCards);
-    setCardImages(Views);
-  }, []);
-
-  function checkSwipedTop(cardCount: any) {
-    const num = cards[cardCount].num;
-    const mark = cards[cardCount].mark;
+function onSwipedEachDirection(
+  cardCount: any,
+  cards: [],
+  alcCount: number,
+  setAlcCount: any,
+  setNextTurnFocus: any,
+  setDrinkCount: any,
+  direction: string,
+) {
+  if (cardCount === cards.length - 2) {
+    //Last card
+    console.log('now last one');
+    setDrinkCount(alcCount);
+    setAlcCount(0);
+  } else {
+    const {num} = cards[cardCount];
     let nextNum = 0;
     let nextMark = '';
-    let postNum = 0;
-    let postMark = '';
     if (cardCount < cards.length) {
       nextNum = cards[cardCount + 1].num;
       nextMark = cards[cardCount + 1].mark;
@@ -75,186 +58,116 @@ export function HighLow({ navigation }: any) {
       nextNum = cards[cardCount].num;
       nextMark = cards[cardCount].mark;
     }
-    if (cardCount >= 1) {
-      postNum = cards[cardCount - 1].num;
-      postMark = cards[cardCount - 1].mark;
-    } else {
-      postNum = cards[cardCount].num;
-      postMark = cards[cardCount].mark;
-    }
 
-    if (cardCount <= 1 || cardCount >= 55) {
-    } else if (postMark === 'joker') {
-    } else if (mark === 'joker') {
+    if (nextMark === 'joker') {
       setAlcCount(alcCount + 2);
-    } else if (postNum >= 3 && postNum <= 11) {
-      if (postNum < num) {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
+    } else if (num >= 3 && num <= 11) {
+      //NOTE: highlowの判定
+      switch (direction) {
+        case directionName.top:
+          if (num < nextNum) {
+            setNextTurnFocus(alcCount);
+            setDrinkCount(alcCount);
+            setAlcCount(0);
+          } else {
+            setAlcCount(alcCount + 1);
+          }
+          break;
+        case directionName.bottom:
+          if (num > nextNum) {
+            setNextTurnFocus(alcCount);
+            setDrinkCount(alcCount);
+            setAlcCount(0);
+          } else {
+            setAlcCount(alcCount + 1);
+          }
+          break;
+        default:
+          break;
       }
-    } else if (postNum === 2 || postNum === 12) {
-      if (mark === 'dia' || mark === 'heart') {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
+    } else if (num === 2 || num === 12) {
+      //NOTE: 赤黒一致の判定
+      switch (direction) {
+        case directionName.top:
+          if (nextMark === 'dia' || nextMark === 'heart') {
+            //NOTE: ハズレ
+            setNextTurnFocus(alcCount);
+            setDrinkCount(alcCount);
+            setAlcCount(0);
+          } else {
+            //NOTE: アタリ
+            setAlcCount(alcCount + 1);
+          }
+          break;
+        case directionName.bottom:
+          if (nextMark === 'spade' || nextMark === 'club') {
+            //NOTE: ハズレ
+            setNextTurnFocus(alcCount);
+            setDrinkCount(alcCount);
+            setAlcCount(0);
+          } else {
+            //NOTE: アタリ
+            setAlcCount(alcCount + 1);
+          }
+          break;
+        default:
+          break;
       }
-    } else if (postNum === 1 || postNum === 13) {
-      if (mark === 'spade') {
+    } else if (num === 1 || num === 13) {
+      //NOTE: mark一致の判定
+      let correctMark = '';
+      switch (direction) {
+        case directionName.top:
+          correctMark = 'spade';
+          break;
+        case directionName.bottom:
+          correctMark = 'club';
+          break;
+        case directionName.right:
+          correctMark = 'dia';
+          break;
+        case directionName.left:
+          correctMark = 'heart';
+          break;
+        default:
+          break;
+      }
+      if (nextMark === correctMark) {
+        setNextTurnFocus(alcCount);
         setDrinkCount(alcCount);
         setAlcCount(0);
       } else {
         setAlcCount(alcCount + 1);
       }
     } else {
+      console.log(
+        'unexpected error happened at HighLow/onSwipedEachDirection',
+      );
     }
   }
+}
 
-  function checkSwipedBottom(cardCount: any) {
-    const num = cards[cardCount].num;
-    const mark = cards[cardCount].mark;
-    if (cardCount < cards.length) {
-      var nextNum = cards[cardCount + 1].num;
-      var nextMark = cards[cardCount + 1].mark;
-    } else {
-      var nextNum = cards[cardCount].num;
-      var nextMark = cards[cardCount].mark;
-    }
-    if (cardCount >= 1) {
-      var postNum = cards[cardCount - 1].num;
-      var postMark = cards[cardCount - 1].mark;
-    } else {
-      var postNum = cards[cardCount].num;
-      var postMark = cards[cardCount].mark;
-    }
+export function HighLow({navigation}: any) {
+  const [cardCount, setCardCount] = useState(0);
+  const [horizontalSwipe, setHorizontalSwipe] = useState(false);
+  const [alcCount, setAlcCount] = useState(0);
+  const [drinkCount, setDrinkCount] = useState(0);
+  const [cards, setCards] = useState(CARDLIST.data);
+  const {setNextTurnFocus, setTotalScore, resetScore} =
+    Contexts.useUserListContext();
 
-    if (cardCount <= 1 || cardCount >= 55) {
-    } else if (postMark === 'joker') {
-    } else if (mark === 'joker') {
-      setAlcCount(alcCount + 2);
-    } else if (postNum >= 3 && postNum <= 11) {
-      if (postNum > num) {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
-      }
-    } else if (postNum === 2 || postNum === 12) {
-      if (mark === 'spade' || mark === 'club') {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
-      }
-    } else if (postNum === 1 || postNum === 13) {
-      if (mark === 'club') {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
-      }
-    } else {
-    }
-  }
-  function checkSwipedRight(cardCount: any) {
-    const num = cards[cardCount].num;
-    const mark = cards[cardCount].mark;
-    if (cardCount < cards.length) {
-      var nextNum = cards[cardCount + 1].num;
-      var nextMark = cards[cardCount + 1].mark;
-    } else {
-      var nextNum = cards[cardCount].num;
-      var nextMark = cards[cardCount].mark;
-    }
-    if (cardCount >= 1) {
-      var postNum = cards[cardCount - 1].num;
-      var postMark = cards[cardCount - 1].mark;
-    } else {
-      var postNum = cards[cardCount].num;
-      var postMark = cards[cardCount].mark;
-    }
-
-    if (cardCount <= 1 || cardCount >= 55) {
-    } else if (postMark === 'joker') {
-    } else if (mark === 'joker') {
-      setAlcCount(alcCount + 2);
-    } else if (postNum >= 3 && postNum <= 11) {
-      if (postNum < num) {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
-      }
-    } else if (postNum === 2 || postNum === 12) {
-      if (mark === 'spade' || mark === 'club') {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
-      }
-    } else if (postNum === 1 || postNum === 13) {
-      if (mark === 'dia') {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
-      }
-    } else {
-    }
-  }
-  function checkSwipedLeft(cardCount: any) {
-    const num = cards[cardCount].num;
-    const mark = cards[cardCount].mark;
-    if (cardCount < cards.length) {
-      var nextNum = cards[cardCount + 1].num;
-      var nextMark = cards[cardCount + 1].mark;
-    } else {
-      var nextNum = cards[cardCount].num;
-      var nextMark = cards[cardCount].mark;
-    }
-    if (cardCount >= 1) {
-      var postNum = cards[cardCount - 1].num;
-      var postMark = cards[cardCount - 1].mark;
-    } else {
-      var postNum = cards[cardCount].num;
-      var postMark = cards[cardCount].mark;
-    }
-
-    if (cardCount <= 1 || cardCount >= 55) {
-    } else if (postMark === 'joker') {
-    } else if (mark === 'joker') {
-      setAlcCount(alcCount + 2);
-    } else if (postNum >= 3 && postNum <= 11) {
-      if (postNum < num) {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
-      }
-    } else if (postNum === 2 || postNum === 12) {
-      if (mark === 'dia' || mark === 'heart') {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
-      }
-    } else if (postNum === 1 || postNum === 13) {
-      if (mark === 'heart') {
-        setDrinkCount(alcCount);
-        setAlcCount(0);
-      } else {
-        setAlcCount(alcCount + 1);
-      }
-    } else {
-    }
-  }
+  useEffect(() => {
+    resetScore();
+    const shuffledCards = shuffle(cards);
+    setCards(shuffledCards);
+  }, []);
+  useEffect(() => {
+    console.log('useEffect', {cardCount});
+  }, [cardCount]);
 
   function showShot(alcCount: any) {
     const shotView = [];
     return (
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <View
         style={{
           flexDirection: 'row',
@@ -262,36 +175,35 @@ export function HighLow({ navigation }: any) {
           alignItems: 'center',
         }}
       >
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Image
           source={require('../../../Images/shot.png')}
-          style={{ width: width * 0.06, height: height * 0.06 }}
+          style={{width: width * 0.06, height: height * 0.06}}
           resizeMode="contain"
         />
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <Text style={{ fontSize: 25, color: 'white' }}> × {alcCount}</Text>
+        <Text style={{fontSize: 25, color: 'white'}}> × {alcCount}</Text>
       </View>
     );
   }
 
   function showDrinkImage(drinkCount: any) {
     return (
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <>
         {drinkCount !== 0 && (
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <View style={styles.drinkImageView}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <View style={styles.drinkImageText}>
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-              <Text style={{ fontSize: height * 0.05, color: 'red' }}>{drinkCount} Shot!</Text>
+              <Text style={{fontSize: height * 0.05, color: 'red'}}>
+                {drinkCount} Shot!
+              </Text>
             </View>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-            <TouchableOpacity onPress={() => setDrinkCount(0)} style={styles.drinkImageTouchable}>
-              {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+            <TouchableOpacity
+              onPress={() => {
+                setDrinkCount(0);
+              }}
+              style={styles.drinkImageTouchable}
+            >
               <Image
                 source={require('../../../Images/cheers/cheer_wine.png')}
-                style={{ width: width, height: height }}
+                style={{width: width, height: height}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -301,86 +213,74 @@ export function HighLow({ navigation }: any) {
     );
   }
 
-  function check1and13(cardCount: any) {
+  function setAbleToSwipe(cardCount: any) {
     setHorizontalSwipe(
-      cards[cardCount + 1].num !== 13 && cards[cardCount + 1].num !== 1 && cards[cardCount + 1].num !== 15,
+      cards[cardCount + 1].num !== 13 &&
+        cards[cardCount + 1].num !== 1 &&
+        cards[cardCount + 1].num !== 15,
     );
-    console.log(cards[cardCount].num);
-    console.log(horizontalSwipe);
   }
 
   function setText(cardCount: any) {
-    const num = cards[cardCount].num;
-    if (cardCount >= 54) {
+    const {num} = cards[cardCount];
+    if (cardCount >= cards.length - 1) {
+      return (
+        <>
+          <View style={styles.topTextbox}>
+            <Text style={styles.topText}>Last card</Text>
+          </View>
+        </>
+      );
     } else if (num >= 3 && num <= 11) {
       return (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.topTextbox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text style={styles.topText}>High</Text>
           </View>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.bottomTextbox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text style={styles.bottomText}>Low</Text>
           </View>
         </>
       );
     } else if (num === 2 || num === 12) {
       return (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.topTextbox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text style={styles.topText}>Red</Text>
           </View>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.bottomTextbox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text style={styles.bottomText}>Black</Text>
           </View>
         </>
       );
     } else if (num === 1 || num === 13) {
       return (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.topTextbox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/spade.png')}
-              style={{ width: width * 0.1, height: height * 0.1 }}
+              style={{width: width * 0.1, height: height * 0.1}}
               resizeMode="contain"
             />
           </View>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.bottomTextbox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/club.png')}
-              style={{ width: width * 0.1, height: height * 0.1 }}
+              style={{width: width * 0.1, height: height * 0.1}}
               resizeMode="contain"
             />
           </View>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.rightTextbox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/dia.png')}
-              style={{ width: width * 0.1, height: height * 0.1 }}
+              style={{width: width * 0.1, height: height * 0.1}}
               resizeMode="contain"
             />
           </View>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <View style={styles.leftTextbox}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Image
               source={require('../../../Images/heart.png')}
-              style={{ width: width * 0.1, height: height * 0.1 }}
+              style={{width: width * 0.1, height: height * 0.1}}
               resizeMode="contain"
             />
           </View>
@@ -390,51 +290,109 @@ export function HighLow({ navigation }: any) {
     }
   }
 
-  function resetCard({ navigation }: any) {
+  function resetCard({navigation}: any) {
     navigation.navigate(HOME);
-  }
-  function navigateToResult() {
-    navigation.navigate(RESULT);
   }
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <View style={styles.container}>
-      {showDrinkImage(drinkCount)}
+      <Components.CheersAnimations
+        drinkCount={drinkCount}
+        setDrinkCount={setDrinkCount}
+      />
       {setText(cardCount)}
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      <Components.PlayerTurn userList={userList} />
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+      <Components.PlayerTurn />
       <View style={styles.box}>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardStack
           style={styles.box}
-          onSwipedTop={() => checkSwipedTop(cardCount)}
-          onSwipedBottom={() => checkSwipedBottom(cardCount)}
-          onSwipedRight={() => checkSwipedRight(cardCount)}
-          onSwipedLeft={() => checkSwipedLeft(cardCount)}
+          onSwipedTop={() => {
+            cardCount >= 1 &&
+              cardCount <= cards.length - 2 &&
+              onSwipedEachDirection(
+                cardCount,
+                cards,
+                alcCount,
+                setAlcCount,
+                setNextTurnFocus,
+                setDrinkCount,
+                directionName.top,
+              );
+            cardCount <= cards.length - 2 &&
+              setCardCount(prev => prev + 1);
+          }}
+          onSwipedBottom={() => {
+            cardCount >= 1 &&
+              cardCount <= cards.length - 2 &&
+              onSwipedEachDirection(
+                cardCount,
+                cards,
+                alcCount,
+                setAlcCount,
+                setNextTurnFocus,
+                setDrinkCount,
+                directionName.bottom,
+              );
+            cardCount <= cards.length - 2 &&
+              setCardCount(prev => prev + 1);
+          }}
+          onSwipedRight={() => {
+            cardCount >= 1 &&
+              cardCount <= cards.length - 2 &&
+              onSwipedEachDirection(
+                cardCount,
+                cards,
+                alcCount,
+                setAlcCount,
+                setNextTurnFocus,
+                setDrinkCount,
+                directionName.right,
+              );
+            cardCount <= cards.length - 2 &&
+              setCardCount(prev => prev + 1);
+          }}
+          onSwipedLeft={() => {
+            cardCount >= 1 &&
+              cardCount <= cards.length - 2 &&
+              onSwipedEachDirection(
+                cardCount,
+                cards,
+                alcCount,
+                setAlcCount,
+                setNextTurnFocus,
+                setDrinkCount,
+                directionName.left,
+              );
+            cardCount <= cards.length - 2 &&
+              setCardCount(prev => prev + 1);
+          }}
           disableLeftSwipe={horizontalSwipe}
           disableRightSwipe={horizontalSwipe}
           verticalSwipe={true}
-          horizontalThreshold={width / 6}
+          horizontalThreshold={height / 8}
           verticalThreshold={width / 6}
-          secondCardZoom={0}
-          onSwipeStart={() => setCardControl(false)}
-          onSwipeEnd={() => setCardControl(true)}
+          secondCardZoom={0.9}
+          onSwipedAll={() => {
+            setTotalScore();
+            navigation.replace(RESULT);
+          }}
           onSwiped={() => {
-            setCardCount(cardCount + 1);
-            check1and13(cardCount);
+            console.log({cardCount});
+            cardCount >= 1 &&
+              cardCount <= cards.length - 2 &&
+              setAbleToSwipe(cardCount);
           }}
         >
-          {cardImages}
-          {/*}
-          <Components.CardList cardControl={cardControl} cards={cards}/>
-        {*/}
+          {cards.map(element => (
+            <Image
+              key={element.uri}
+              source={element.uri}
+              style={{width: width * 0.7, height: height * 0.9}}
+              resizeMode="contain"
+            />
+          ))}
         </CardStack>
       </View>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.shot}>{showShot(alcCount)}</View>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.alcCount}>
         {/*}
         <Text style={{color: 'black', fontSize: height*0.06, fontFamily: 'AppleSDGothicNeo-Light',}}>
@@ -442,13 +400,9 @@ export function HighLow({ navigation }: any) {
         </Text>
         {*/}
       </View>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <View style={styles.resetBox}>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-        <TouchableOpacity onPress={() => resetCard({ navigation })}>
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+        <TouchableOpacity onPress={() => resetCard({navigation})}>
           <View style={styles.reset}>
-            {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Text
               style={{
                 color: 'black',
@@ -456,7 +410,7 @@ export function HighLow({ navigation }: any) {
                 fontFamily: 'AppleSDGothicNeo-Light',
               }}
             >
-              Back{/*}{cardCount}{*/}
+              Back
             </Text>
           </View>
         </TouchableOpacity>

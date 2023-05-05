@@ -276,4 +276,36 @@ export const CARDLIST = {
       uri: require('../Images/joker2.png'),
     },
   ],
+  testData: [
+    {
+      mark: 'reverse',
+      num: 15,
+      uri: require('../Images/reverse.png'),
+    },
+    {
+      mark: 'spade',
+      num: 1,
+      uri: require('../Images/spade1.png'),
+    },
+    {
+      mark: 'spade',
+      num: 2,
+      uri: require('../Images/spade2.png'),
+    },
+    {
+      mark: 'spade',
+      num: 3,
+      uri: require('../Images/spade3.png'),
+    },
+    {
+      mark: 'spade',
+      num: 4,
+      uri: require('../Images/spade4.png'),
+    },
+    {
+      mark: 'spade',
+      num: 5,
+      uri: require('../Images/spade5.png'),
+    },
+  ],
 };

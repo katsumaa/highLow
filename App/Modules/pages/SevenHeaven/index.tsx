@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
-import { CARDLIST } from '../../../Constants/CardList';
-import CardStack, { Card } from '../../../Components/ThirdPartyComponents/react-native-card-stack-swiper';
-import { HOME } from '../../../Constants/path';
+import React, {useState, useEffect} from 'react';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {CARDLIST} from '../../../Constants/CardList';
+import CardStack, {
+  Card,
+} from '../../../Components/ThirdPartyComponents/react-native-card-stack-swiper';
+import {HOME} from '../../../Constants/path';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const {width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 const shuffle = ([...array]) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * i) + 1;
@@ -14,21 +23,21 @@ const shuffle = ([...array]) => {
   return array;
 };
 
-export function SevenHeaven({ navigation }: any) {
+export function SevenHeaven({navigation}: any) {
   const [cardCount, setCardCount] = useState(0);
   const [cards, setCards] = useState(CARDLIST.data);
-  console.log({ cards });
+  console.log({cards});
 
   useEffect(() => {
     const shuffledCards = shuffle(cards);
     setCards(shuffledCards);
   }, []);
 
-  function resetCard({ navigation }: any) {
+  function resetCard({navigation}: any) {
     navigation.navigate(HOME);
   }
   function setText() {
-    const num = cards[cardCount].num;
+    const {num} = cards[cardCount];
     let text = '';
     if (num === 1) {
       text = '全員でぐい';
@@ -88,14 +97,14 @@ export function SevenHeaven({ navigation }: any) {
             <Image
               key={element.uri}
               source={element.uri}
-              style={{ width: width * 0.7, height: height * 0.9 }}
+              style={{width: width * 0.7, height: height * 0.9}}
               resizeMode="contain"
             />
           ))}
         </CardStack>
       </View>
       <View style={styles.resetBox}>
-        <TouchableOpacity onPress={() => resetCard({ navigation })}>
+        <TouchableOpacity onPress={() => resetCard({navigation})}>
           <View style={styles.reset}>
             <Text
               style={{

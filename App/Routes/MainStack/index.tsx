@@ -11,6 +11,7 @@ import {
   RESULT,
   ROULETTE,
   OJISAN,
+  TRUETH_OR_DARE,
 } from '../../Constants/path';
 import {
   HighLow,
@@ -21,6 +22,7 @@ import {
   Result,
   Roulette,
   Ojisan,
+  TruethOrDare,
 } from '../../Modules/pages';
 import * as Contexts from '../../Context';
 
@@ -28,28 +30,18 @@ const Stack = createStackNavigator();
 
 export default function MainStack() {
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <NavigationContainer>
-      {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Contexts.UserListProvider>
-        {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Stack.Navigator initialRouteName={Home} headerMode="none">
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Stack.Screen name={HOME} component={Home} />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Stack.Screen name={HIGHLOW} component={HighLow} />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Stack.Screen name={SEVENHEAVEN} component={SevenHeaven} />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Stack.Screen name={SETTINGS} component={Settings} />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Stack.Screen name={HARDMODE} component={HardMode} />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Stack.Screen name={RESULT} component={Result} />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Stack.Screen name={ROULETTE} component={Roulette} />
-          {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Stack.Screen name={OJISAN} component={Ojisan} />
+          <Stack.Screen name={TRUETH_OR_DARE} component={TruethOrDare} />
         </Stack.Navigator>
       </Contexts.UserListProvider>
     </NavigationContainer>
