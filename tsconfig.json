@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    /* Modules */
+    "module": "commonjs",
+    "lib": ["es2019"],
+    "jsx": "react-native",
+    "sourceMap": true,
+    "outDir": "./build",
+    "incremental": true,
+    "removeComments": false,
+    "downlevelIteration": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "types": [
+      "jest",
+      "node"
+    ],
+    /* Strict Type-Checking Options */
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictBindCallApply": false,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": false,
+    "esModuleInterop": true,
+    /* Settings of Root Directory */
+    "baseUrl": ".",
+    "paths": {
+      "HighLow/*": ["./*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["App/**/*.ts", "App/**/*.tsx", "amplify/backend/function/**/*.js"]
+}
